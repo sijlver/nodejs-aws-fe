@@ -12,10 +12,17 @@ axios.interceptors.response.use(
   response => {
     return response;
   },
-  function(error) {
-    if (error.response.status === 400) {
+  error => {
+    const responseStatus = error.response.status;
+
+    if (responseStatus === 400) {
       alert(error.response.data?.data);
     }
+
+    if (responseStatus === 401 || responseStatus === 403) {
+      alert(error.response.data?.message);
+    }
+
     return Promise.reject(error.response);
   }
 );
